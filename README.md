@@ -8,6 +8,14 @@ reduced features (no serial, no dfu, ...).
 
 Both the pure Rust and the Hacspec implementation have been tested on nrf52840dk.
 
+## Prerequisites
+
+- Install [rust](https://www.rust-lang.org/learn/get-started)
+
+- Install the `rust-std` component for your target, in this case:
+
+  $ rustup target add thumbv7em-none-eabi
+
 ## How to build
 
 riotboot-rs supports both pure Rust and a Hacspec built. Choose by using one of the
