@@ -6,6 +6,8 @@
 extern crate panic_halt;
 
 use cortex_m_rt::entry;
+
+#[cfg(feature = "debug")]
 use cortex_m_semihosting::hprintln;
 
 #[cfg(not(feature = "verified"))]
@@ -73,7 +75,8 @@ fn main() -> ! {
     let image = choose_image(&headers[..]);
 
     if let Some(image_address) = image {
-        //hprintln!("jumping to image address {:#08x}", image_address).unwrap();
+        #[cfg(feature = "debug")]
+        hprintln!("jumping to image address {:#08x}", image_address).unwrap();
         cpu_jump_to_image(image_address);
     }
     panic!("no suitable image found");

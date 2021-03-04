@@ -20,6 +20,7 @@ static-alloc = { optional=true, version = "0.2.2" }
 [features]
 internal = ["fletcher"]
 verified = ["hacspec-lib/alloc", "hacspec-riot-bootloader", "static-alloc"]
+debug = []
 
 [[bin]]
 name = "riotboot-rs"
