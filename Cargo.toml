@@ -13,8 +13,8 @@ cortex-m-rt = "0.6.13"
 cortex-m-semihosting = "0.3.7"
 
 fletcher = { optional=true, git = "https://github.com/jbangelo/fletcher" }
-hacspec-riot-bootloader = { optional = true, git="https://github.com/kaspar030/hacspec", branch="no_std" }
-hacspec-lib = { optional = true, git="https://github.com/kaspar030/hacspec", branch="no_std", default-features = false }
+hacspec-riot-bootloader = { optional = true, git="https://github.com/kaspar030/hacspec", branch="riotboot-rs" }
+hacspec-lib = { optional = true, git="https://github.com/kaspar030/hacspec", branch="riotboot-rs", default-features = false }
 static-alloc = { optional=true, version = "0.2.2" }
 
 [features]
