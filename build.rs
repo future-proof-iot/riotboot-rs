@@ -3,20 +3,32 @@ use std::path::PathBuf;
 
 use ld_memory::{Memory, MemorySection};
 
+fn parse_usize(string: &str) -> Result<usize, std::num::ParseIntError> {
+    if string.starts_with("0x") {
+        let trimmed = string.trim_start_matches("0x");
+        usize::from_str_radix(trimmed, 16)
+    } else {
+        string.parse::<usize>()
+    }
+}
+
+fn parse_from_env(var: &str, default: usize) -> Result<usize, std::num::ParseIntError> {
+    if let Ok(val) = env::var(var) {
+        Ok(parse_usize(&val)?)
+    } else {
+        Ok(default)
+    }
+}
+
 fn main() {
     let out_dir = env::var("OUT_DIR").unwrap();
 
-    let flash_start =
-        env::var("RIOTBOOT_FLASH_START").map_or(0usize, |env| env.parse::<usize>().unwrap());
+    let flash_start = parse_from_env("RIOTBOOT_FLASH_START", 0).unwrap();
+    let flash_len = parse_from_env("RIOTBOOT_FLASH_LEN", 0x2000usize).unwrap();
+    let ram_start = parse_from_env("RIOTBOOT_RAM_START", 0x20000000usize).unwrap();
+    let ram_len = parse_from_env("RIOTBOOT_RAM_LEN", 0x2000usize).unwrap();
 
-    let flash_len =
-        env::var("RIOTBOOT_FLASH_LEN").map_or(0x2000usize, |env| env.parse::<usize>().unwrap());
-
-    let ram_start =
-        env::var("RIOTBOOT_RAM_START").map_or(0x20000000usize, |env| env.parse::<usize>().unwrap());
-
-    let ram_len =
-        env::var("RIOTBOOT_RAM_LEN").map_or(0x2000usize, |env| env.parse::<usize>().unwrap());
+    eprintln!("{} {} {} {}", flash_start, flash_len, ram_start, ram_len);
 
     let memory = Memory::new()
         .add_section(MemorySection::new("FLASH", flash_start, flash_len))
