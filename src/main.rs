@@ -57,7 +57,8 @@ pub extern "C" fn cpu_jump_to_image(image_address: u32) -> ! {
     ldr     r1, [$0]        /* r1 = *image_address          */
     msr     msp, r1         /* MSP = r1                     */
     ldr     $0, [$0, #4]    /* r0 = *(image_address + 4)    */
-    orr.w   $0, $0, #1      /* r0 |= 0x1 (set thumb bit)    */
+    movs    r1, #1          /* r1 = 1                       */
+    orrs    $0, $0, r1      /* r0 |= r1 (set thumb bit)     */
     bx      $0              /* branch to image              */
         "
         :
