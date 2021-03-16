@@ -5,6 +5,8 @@
 
 extern crate panic_halt;
 
+core::include!(concat!(env!("OUT_DIR"), "/constants.rs"));
+
 use cortex_m_rt::entry;
 
 #[cfg(feature = "debug")]
@@ -72,7 +74,12 @@ pub extern "C" fn cpu_jump_to_image(image_address: u32) -> ! {
 
 #[entry]
 fn main() -> ! {
-    let headers = unsafe { [&*(0x2000 as *const Header), &*(528_384 as *const Header)] };
+    let headers = unsafe {
+        [
+            &*(SLOT0_ADDR as *const Header),
+            &*(SLOT1_ADDR as *const Header),
+        ]
+    };
     let image = choose_image(&headers[..]);
 
     if let Some(image_address) = image {
