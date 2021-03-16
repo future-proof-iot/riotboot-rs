@@ -43,5 +43,5 @@ fn main() {
     println!("cargo:rerun-if-env-changed=RIOTBOOT_RAM_START");
     println!("cargo:rerun-if-env-changed=RIOTBOOT_RAM_LEN");
     println!("cargo:rustc-link-search=native={}", &out_dir);
-    println!("cargo:rustc-link-arg=-Tmemory.x");
+    println!("cargo:rustc-link-arg=-Tlink.x");
 }
