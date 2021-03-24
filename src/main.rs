@@ -46,7 +46,7 @@ use static_alloc::Bump;
 
 #[cfg(feature = "verified")]
 #[global_allocator]
-static A: Bump<[u8; 1 << 14]> = Bump::uninit();
+static A: Bump<[u8; 1 << 10]> = Bump::uninit(); // we really don't need much heap
 
 // HACKSPEC specifics end
 
